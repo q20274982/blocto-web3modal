@@ -1,7 +1,7 @@
 import { Web3Button } from '@web3modal/react'
 import { useAccount } from 'wagmi'
 
-import { Account } from '../components'
+import { Account, SendTransaction } from '../components'
 
 function Page() {
   const { isConnected } = useAccount()
@@ -12,7 +12,12 @@ function Page() {
 
       <Web3Button />
 
-      {isConnected && <Account />}
+      {isConnected && (
+        <>
+          <Account />
+          <SendTransaction />
+        </>
+      )}
     </>
   )
 }

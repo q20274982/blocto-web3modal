@@ -1,6 +1,6 @@
 import { w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { configureChains, createClient } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
+import { goerli } from 'wagmi/chains'
 // import BloctoConnector from './connectors/bloctoWalletConnectors'
 import { BloctoConnector } from '@blocto/wagmi-connector';
 
@@ -9,7 +9,7 @@ import { BloctoConnector } from '@blocto/wagmi-connector';
 export const walletConnectProjectId = 'c1642a0a861332fe7ac8b5820f347dd4'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet],
+  [goerli],
   [w3mProvider({ projectId: walletConnectProjectId })],
 )
 
@@ -17,10 +17,10 @@ export const client = createClient({
   autoConnect: false,
   connectors: [
     new BloctoConnector({
-      chains: [mainnet],
+      chains: [goerli],
       options: {
-        chainId: '0x1',
-        rpc: 'https://mainnet.infura.io/v3/f5f39cce910e421c81f3c6c646e003a6'
+        chainId: goerli.id,
+        rpc: 'https://rpc.ankr.com/eth_goerli'
       }
     })
     ,...w3mConnectors({
