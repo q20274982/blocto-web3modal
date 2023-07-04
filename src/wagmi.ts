@@ -13,6 +13,8 @@ const { chains, provider, webSocketProvider } = configureChains(
   [w3mProvider({ projectId: walletConnectProjectId })],
 )
 
+export const rpc = 'https://rpc.ankr.com/eth_goerli'
+
 export const client = createClient({
   autoConnect: false,
   connectors: [
@@ -20,7 +22,7 @@ export const client = createClient({
       chains: [goerli],
       options: {
         chainId: goerli.id,
-        rpc: 'https://rpc.ankr.com/eth_goerli'
+        rpc
       }
     })
     ,...w3mConnectors({
