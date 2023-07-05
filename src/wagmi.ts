@@ -1,8 +1,8 @@
 import { w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { configureChains, createClient } from 'wagmi'
 import { goerli, polygonMumbai } from 'wagmi/chains'
-import BloctoConnector from './connectors/bloctoWalletConnectors'
-// import { BloctoConnector } from '@blocto/wagmi-connector';
+// import BloctoConnector from './connectors/bloctoWalletConnectors'
+import { BloctoConnector } from '@blocto/wagmi-connector';
 
 
 
