@@ -56,6 +56,7 @@ export default class bloctoConnector extends Connector<
   async disconnect(): Promise<void> {
     const provider = await this.getProvider();
     await provider?.request({ method: "wallet_disconnect" });
+    this.onDisconnect();
   }
   
   async getAccount(): Promise<`0x${string}`> {
@@ -104,6 +105,7 @@ export default class bloctoConnector extends Connector<
         params: [{ chainId: id }]
       })
 
+      this.onChainChanged(id);
       return (
         chain ?? {
           id: chainId,
@@ -121,10 +123,25 @@ export default class bloctoConnector extends Connector<
   protected onAccountsChanged(accounts: `0x${string}`[]): void {
     // not supported yet
   }
-  protected onChainChanged(chain: string | number): void {
-    // not supported yet
+  protected onChainChanged(chainId: string | number): void {
+    const id = normalizeChainId(chainId);
+    const unsupported = this.isChainUnsupported(id);
+    this.emit('change', { chain: { id, unsupported } });
   }
-  protected onDisconnect(error: Error): void {
-    // not supported yet
+  protected onDisconnect(): void {
+    this.emit('disconnect');
   }
+}
+
+function normalizeChainId(chainId: string | number | bigint) {
+  if (typeof chainId === "string") {
+    return Number.parseInt(
+      chainId,
+      chainId.trim().substring(0, 2) === "0x" ? 16 : 10,
+    );
+  }
+  if (typeof chainId === "bigint") {
+    return Number(chainId);
+  }
+  return chainId;
 }
